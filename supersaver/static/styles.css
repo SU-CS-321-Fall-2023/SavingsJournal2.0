@@ -1,0 +1,101 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: #ffffff;
+}
+
+.icon-text-group {
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;  /* Adjust this to change the spacing between the buttons */
+    
+}
+
+.navbar-icon {
+    width: 70px;
+    height: auto;
+    margin-right: -13px;  /* This adds some space between the icon and the "Super Saver" text */
+}
+
+.big-image {
+    width: 500px; 
+    height: 400px; 
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -100px;  /* This moves the image 30px to the left */
+}
+
+
+
+.content {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    justify-content: space-between;
+}
+
+
+.red-btn {
+    background-color: #FFD1D1;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px 40px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+}
+
+.red-btn:hover {
+    background-color: #FFB0B0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+hr {
+    width: 80%;
+    margin: 40px auto;
+}
+
+.navbar span {
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 20px;
+}
+h1 {
+    font-size: 5em;  /* Adjust this value for the desired font size */
+    text-align: right;
+    position: relative;  /* This allows manual positioning */
+    right: 100px;  /* This moves the image 30px to the left */
+}
+p {
+    position: relative;  /* This allows manual positioning */
+    font-size: 2em; 
+    right: -20px; 
+}
+.startBtn{
+    position: relative;  /* This allows manual positioning */
+    font-size: 2em; 
+    right: -150px; 
+}
+
+
