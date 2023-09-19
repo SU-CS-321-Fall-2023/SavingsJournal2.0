@@ -1,9 +1,9 @@
 class SavingsAlgorithms:
 
-    currentsavings = x # find way to load/access value
-    totalneeded = x # find way to load/access value
-    recentlysaved = x # temporary value for when $ is made towards a goal
-    addedgoal = x # temporary value for freshly added goal amount
+    currentsavings = None # find way to load/access value
+    totalneeded = None # find way to load/access value
+    recentlysaved = None # temporary value for when $ is made towards a goal
+    addedgoal = None # temporary value for freshly added goal amount
     # may reset recentlysaved and addedgoal each time they're compiled into the savings?
 
     # to do:
@@ -18,9 +18,12 @@ class SavingsAlgorithms:
     # total savings function -- will include the first goal being created
     # all will compile as new goals are added or as savings are updated
     def updatetotalsavings():
-        if change detected:
-            if change in currentsavings: # if a goal has progress made towards it
-                currentsavings += recentlysaved # update currentsavings
-            if change in totalneeded: # if a new goal is added
-                totalneeded += addedgoal # update totalneeded
-            progressbar()
+        # if change detected, do the thing
+        if recentlysaved: # if a goal has progress made towards it, add that to what's been saved already
+            currentsavings += recentlysaved
+            recentlysaved = None
+            progressbar() # reflects changes in the progress bar
+        if addedgoal: # if a new goal is added, add that amount to totalneeded
+            totalneeded += addedgoal
+            addedgoal = None
+            progressbar() # reflects changes in the progress bar
