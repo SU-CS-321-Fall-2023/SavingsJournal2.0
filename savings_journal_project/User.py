@@ -31,7 +31,7 @@ class User:
         self._name = x
 
     class User(BaseModel):
-        id: Optional[PydanticObjectId] = Field(None, alias="_id")
+        user_id: Optional[PydanticObjectId] = Field(None, alias="_id")
         #slug: str
         name: str
         email: str
@@ -44,6 +44,7 @@ class User:
         # save to Mongo in dictionary type style
         # Mongodb document (JSON-style) inserting into collection
         user_ID = {
+            "user_id" : id
             "name": name,
             "email": email,
             "password": password,

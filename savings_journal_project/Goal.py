@@ -1,6 +1,8 @@
 from urllib import request
-from savings_journal_project.main import user_collection
+from savings_journal_project.main import user_collection, db
+from savings_journal_project.main import goal_collection
 from datetime import date
+from flask import Flask, request, jsonify
 
 
 class Goal:
@@ -40,9 +42,10 @@ class Goal:
         self._notes = x
 
     # model.py
-    class Goal(BaseModel):
-        id: Optional[PydanticObjectId] = Field(None, alias="_id")
+    class Goal(BaseModel): #each goal will have the user ID
+        goal_id: Optional[PydanticObjectId] = Field(None, alias="_id")
         #slug: str
+        user_id : int
         title: str
         amount: int
         deadline: date
@@ -58,6 +61,26 @@ class Goal:
             if data["_id"] is None:
                 data.pop("_id")
             return data
+
+        #change print style
+        @app.route("/get/<user_id>", methods=['GET'])
+        def get_all_goals(user_id):
+            user_goals = goal_collection.find({"user_id": int(user_id)})
+            for goal in user_goals:
+                print(goal) #dispaly as dictionaries
+
+        #change print style
+        @app.route("/get/<user_id>", methods=['GET'])
+        def get_one_goal(user_id, title): #might not search by goal_id
+            goal = user_collection.find_one({"user_id": int(user_id), 'title': title})
+            return goal #as dictionary
+
+
+        @app.route("/edit/<goal_id>", methods=['POST'])
+        @app.route("/delete/<goal_id>", methods=['DELETE'])
+        @app.route("/", methods=['POST'])
+
+    #
 
     """
     def save_goal_info(self, goal_ID, title, amount, deadline, notes):

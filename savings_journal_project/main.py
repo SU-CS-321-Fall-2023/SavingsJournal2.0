@@ -4,9 +4,9 @@ from pymongo_get_database import get_database
 import User
 import Goal
 
-users_db = get_database()
-user_collection = users_db["user_info"]
-# goal_collection = dbname["goal_info"] #collection inside a collection?
+db = get_database()
+user_collection = db["users"]
+goal_collection = db["goals"] #collection inside a collection?
 # setting up a collection of goals for one user
 # can we put all the users inside a collection?
 # it's a reference
