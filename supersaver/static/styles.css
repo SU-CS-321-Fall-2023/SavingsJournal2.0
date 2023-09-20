@@ -161,5 +161,34 @@ p {
     position: relative;  /* This allows manual positioning */
     right: 700px;  /* This moves the image 30px to the left */
 }
+.TotalSavingsNeeded{
+    font-size: 4em;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    right: -80px;  /* This moves the image 30px to the left */
+    top: -70px;
+    color: #ff8c8c;
+}
+.totalSavingsBg{
+    background-color: #ff8c8c;
+    box-shadow: -15px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px 250px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    right: -200px;
+    top: -20px;
+}
+.totalNumbers{
+color:white;
+position: relative;  /* This allows manual positioning */
+    right: -2px;
+    font-style: italic;
+    font-weight: 100;
+}
 
 
