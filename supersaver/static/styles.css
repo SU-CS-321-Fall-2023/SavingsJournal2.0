@@ -161,5 +161,19 @@ p {
     position: relative;  /* This allows manual positioning */
     right: 700px;  /* This moves the image 30px to the left */
 }
-
+.displayBox{
+   background-color: #FFD1D1;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 60px 140px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    top: 200px;
+    right: -455px;
+}
 
