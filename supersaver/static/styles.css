@@ -13,6 +13,8 @@ body {
 .icon-text-group {
     display: flex;
     align-items: center;
+    position: relative;
+    top: -20px;
 }
 
 .navbar a {
@@ -26,6 +28,7 @@ body {
 .button-group {
     display: flex;
     gap: 10px;  /* Adjust this to change the spacing between the buttons */
+    font-size: 20px;
     
 }
 
@@ -38,12 +41,11 @@ body {
 .big-image {
     width: 500px; 
     height: 400px; 
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); 
+    box-shadow: -15px /*20px*/ 20px rgba(0, 0, 0, 0.3); 
     border-radius: 5px;
     position: relative;  /* This allows manual positioning */
     right: -100px;  /* This moves the image 30px to the left */
 }
-
 
 
 .content {
@@ -63,6 +65,8 @@ body {
     color: inherit;
     transition: all 0.3s;
     display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: .8em;
 }
 
 .red-btn:hover {
@@ -70,6 +74,24 @@ body {
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
+.savingsBtn{
+    background-color: #FFD1D1;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 12px 20px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    top: -9px;
+}
+.savingsBtn:hover {
+    background-color: #FFB0B0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
 
 hr {
     width: 80%;
@@ -96,6 +118,109 @@ p {
     position: relative;  /* This allows manual positioning */
     font-size: 2em; 
     right: -150px; 
+}
+.coins-image {
+    width: 400px; 
+    height: 250px; 
+    box-shadow: 15px /*20px*/ 12px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -700px;  /* This moves the image 30px to the left */
+}
+.coins-text {
+    font-size: 2em;  /* Adjust this value for the desired font size */
+    text-align: left;
+    position: relative;  /* This allows manual positioning */
+    right: 700px;  /* This moves the image 30px to the left */
+}
+.jar-image {
+    width: 400px; 
+    height: 250px; 
+    box-shadow: -15px /*20px*/ 12px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -180px;  /* This moves the image 30px to the left */
+}
+.jar-text {
+    font-size: 2em;  /* Adjust this value for the desired font size */
+    text-align: left;
+    position: relative;  /* This allows manual positioning */
+    right: 180px;  /* This moves the image 30px to the left */
+}
+.wallet-image {
+    width: 400px; 
+    height: 250px; 
+    box-shadow: 15px /*20px*/ 12px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -700px;  /* This moves the image 30px to the left */
+}
+.wallet-text {
+    font-size: 2em;  /* Adjust this value for the desired font size */
+    text-align: left;
+    position: relative;  /* This allows manual positioning */
+    right: 700px;  /* This moves the image 30px to the left */
+}
+.TotalSavingsNeeded{
+    font-size: 4em;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    right: 0px;  /* This moves the image 30px to the left */
+    top: -70px;
+    color: #ff8c8c;
+}
+.totalSavingsBg{
+    background-color: #ff8c8c;
+    box-shadow: 20px /*5px*/ 20px rgba(0, 0, 0, 0.2);
+    padding: 20px 250px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    right: -150px;
+    top: -50px;
+}
+.totalNumbers{
+color:white;
+position: relative;  /* This allows manual positioning */
+    right: 15px;
+    font-style: italic;
+    font-weight: 100;
+}
+.motivationalSpeech{
+    color:white;
+position: relative;  /* This allows manual positioning */
+    right: -10px;
+    font-style: italic;
+    font-weight: 100;
+    top: -20px;
+}
+.progressBg{
+    background-color: #ff8c8c;
+    box-shadow: 20px /*5px*/ 20px rgba(0, 0, 0, 0.2);
+    padding: 20px 20px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+     /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 25px;
+    position: relative;  /* This allows manual positioning */
+    top: -80px;
+    left: 150px;
+    
+}
+.contentTotal{
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    justify-content: space-between;
+    position: relative;
+    top: -30px;
+    
 }
 
 
