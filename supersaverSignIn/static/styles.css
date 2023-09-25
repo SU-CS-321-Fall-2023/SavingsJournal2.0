@@ -188,8 +188,8 @@ p {
 }
 .signInBg{
     background-color: #ff8c8c;
-    box-shadow: 20px /*5px*/ 20px rgba(0, 0, 0, 0.2);
-    padding: 400px 300px;  /* Adjust this to your desired size */
+    box-shadow: -15px /*5px*/ 15px rgba(0, 0, 0, 0.2);
+    padding: 190px 150px;  /* Adjust this to your desired size */
     border: none;
     text-decoration: none;
     color: inherit;
@@ -198,7 +198,24 @@ p {
     border-radius: 5px;
     font-size: 1em;
     position: relative;  /* This allows manual positioning */
-    right: -150px;
-    top: -50px;
+    right: -370px;
+    top: -100px;
+}
+.usernameSignIn{
+    font-size: 30px;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    left: -100px;  /* This moves the image 30px to the left */
+    top: -150px;
+    color: white;
+    font-weight: 100;
+}
+
+.passwordSignIn{
+    font-size: 30px;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    left: -100px;  /* This moves the image 30px to the left */
+    top: -100px;
+    color: white;
+    font-weight: 100;
 }
 
