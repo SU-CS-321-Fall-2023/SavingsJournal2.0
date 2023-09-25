@@ -164,7 +164,7 @@ p {
 .TotalSavingsNeeded{
     font-size: 4em;  /* Adjust this value for the desired font size */
     position: relative;  /* This allows manual positioning */
-    right: -20px;  /* This moves the image 30px to the left */
+    right: 0px;  /* This moves the image 30px to the left */
     top: -70px;
     color: #ff8c8c;
 }
