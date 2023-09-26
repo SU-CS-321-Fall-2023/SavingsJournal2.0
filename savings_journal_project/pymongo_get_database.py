@@ -1,3 +1,4 @@
+"""
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
@@ -16,3 +17,4 @@ def get_database():
 
     # Create the database
     return client['user']
+"""
