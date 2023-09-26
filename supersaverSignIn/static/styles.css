@@ -218,4 +218,76 @@ p {
     color: white;
     font-weight: 100;
 }
-
+#textbox1{
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: -4px /*5px*/ 4px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    color: #333;
+    position: relative;
+    top: -210px;
+    right: -65px;
+  }
+  
+  #textbox1:focus {
+    outline: none;
+    border-color: blue;
+    box-shadow: 0 0 5px blue;
+  }
+  #textbox2{
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: -4px /*5px*/ 4px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    color: #333;
+    position: relative;
+    right: -65px;
+    top: -160px;
+  }
+  #textbox2:focus{
+    outline: none;
+    border-color: blue;
+    box-shadow: 0 0 5px blue;
+  }
+  .password{
+    position: relative;
+    top:-50px;
+  }
+  .enterBtn{
+    background-color: white;
+    box-shadow: -4px/* 5px*/ 4px rgba(0, 0, 0, 0.2);
+    padding: 0px 80px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    top: -110px;
+}
+.enterBtn:hover {
+    background-color: #fcebeb;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+.enter-btn{
+    position: relative;  /* This allows manual positioning */
+    font-size: 2em; 
+    text-decoration: none;
+    color: #ff7878;
+}
+.signUptxt{
+    font-size: 25px;
+    font-weight:100px;
+    position: relative;
+    bottom: 50px;
+}
+  
+  
