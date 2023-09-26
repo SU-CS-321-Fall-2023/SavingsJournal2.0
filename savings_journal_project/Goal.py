@@ -1,11 +1,12 @@
 from urllib import request
-from savings_journal_project.main import user_collection, db
-from savings_journal_project.main import goal_collection
+from savings_journal_project.PydanticObjectId import PydanticObjectId
+from savings_journal_project.app import db
 from datetime import date
 from flask import Flask, request, jsonify
+from pymongo.collection import ReturnDocument
 
 
-class Goal:
+class Goal(Resource):
 
     def __init__(self, title, amount, deadline, notes):
         self._title = title
@@ -41,48 +42,49 @@ class Goal:
     def set_notes(self, x):
         self._notes = x
 
-    # model.py
-    class Goal(BaseModel): #each goal will have the user ID
-        goal_id: Optional[PydanticObjectId] = Field(None, alias="_id")
-        #slug: str
-        user_id : int
-        title: str
-        amount: int
-        deadline: date
-        notes: str
-        #date_added: Optional[datetime]
-        #date_updated: Optional[datetime]
+        # w
+    @app.route("/savings_journal/post/<string:goal._id>", methods=['POST']) # create new entry on savings journal page
+    @app.route("/goals/post/<string:goal._id>", methods=['POST']) #create new entry on goals page
+    def save_goal(self):
+        #user_id = self.get_user_id()
+        goal_create = request.get_json()
+        goal = Goal(**goal_create)
+        insert_result = db.goals.insert_one(goal.to_bson()) #goal.dict()?
+        goal.id = PydanticObjectId(str(insert_result.inserted_id))
+    @app.route("/savings_journal/<string:goal._id>", methods=['GET'])
+    def get_goal_info(self):
+        # get one goal
+        goal = db.goals.find_one_or_404({'_id':self._id})
+        return Goal(**goal).to_json()
 
-        def to_json(self):
-            return jsonable_encoder(self, exclude_none=True)
+    @app.route("/", methods=['GET'])
+    def get_goal_piece(self, info_piece):
+    # could get whatever field you want return user.get("_id")
+    #user = db.users.find_one(self._id)
+        return self._id.get(info_piece)
 
-        def to_bson(self):
-            data = self.dict(by_alias=True, exclude_none=True)
-            if data["_id"] is None:
-                data.pop("_id")
-            return data
+    @app.route("/goals/delete/<str ing:goal._id>", methods=['DELETE'])
+    @app.route("/savings_journal/delete/<string:goal._id>", methods=['DELETE'])
+    def delete_goal(self):
+    # delete a  goal
+        db.goals.remove(self._id)
+    @app.route("/saving_journal/edit/<string:goal._id>", methods=['PATCH'])
+    @app.route("/saving_journal/edit/<string:goal._id>", methods=['PATCH'])
+    def update_goal(self):
+    # update goal entry
+        goal = Goal(**request.get_json())
+        updated_goal = db.goals.find_one_and_update(
+            {"_id": self._id},
+            {"$set" : goal.to_bson()},
+            return_document = ReturnDocument.AFTER,
+        )
+        if updated_goal:
+            return Goal(**updated_goal.to_json())
+        else:
+            flask.abort(404, 'Goal not found')
 
-        #change print style
-        @app.route("/get/<user_id>", methods=['GET'])
-        def get_all_goals(user_id):
-            user_goals = goal_collection.find({"user_id": int(user_id)})
-            for goal in user_goals:
-                print(goal) #dispaly as dictionaries
 
-        #change print style
-        @app.route("/get/<user_id>", methods=['GET'])
-        def get_one_goal(user_id, title): #might not search by goal_id
-            goal = user_collection.find_one({"user_id": int(user_id), 'title': title})
-            return goal #as dictionary
-
-
-        @app.route("/edit/<goal_id>", methods=['POST'])
-        @app.route("/delete/<goal_id>", methods=['DELETE'])
-        @app.route("/", methods=['POST'])
-
-    #
-
-    """
+"""
     def save_goal_info(self, goal_ID, title, amount, deadline, notes):
         # save to Mongo in dictionary type style
         # Mongodb document (JSON-style) inserting into collection
@@ -112,7 +114,6 @@ class Goal:
     def get_goal_info(self, user_ID, goal_ID):
 
     def update_goal(self, goal):
-    
     """
 
 
