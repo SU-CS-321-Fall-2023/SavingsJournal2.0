@@ -181,7 +181,7 @@ p {
 .Sign-in-txt{
     font-size: 3em;  /* Adjust this value for the desired font size */
     position: relative;  /* This allows manual positioning */
-    left: 200px;  /* This moves the image 30px to the left */
+    left: 190px;  /* This moves the image 30px to the left */
     top: -100px;
     color: #ff8c8c;
     font-weight: 100;
@@ -234,8 +234,8 @@ p {
   
   #textbox1:focus {
     outline: none;
-    border-color: blue;
-    box-shadow: 0 0 5px blue;
+    border-color: rgb(255, 204, 212);
+    /*box-shadow: 0 0 5px rgba(253, 90, 117);*/
   }
   #textbox2{
     width: 200px;
@@ -252,8 +252,8 @@ p {
   }
   #textbox2:focus{
     outline: none;
-    border-color: blue;
-    box-shadow: 0 0 5px blue;
+    border-color: rgb(255, 204, 212);
+    /*box-shadow: 0 0 5px blue;*/
   }
   .password{
     position: relative;
@@ -288,6 +288,15 @@ p {
     font-weight:100px;
     position: relative;
     bottom: 50px;
+}
+.Sign-upBtn{
+    position: relative;  /* This allows manual positioning */
+    font-size: 25px; 
+    /*text-decoration: none*/
+    color: black;
+    font-weight: 100px;
+    bottom: 105px;
+    left: 125px;
 }
   
   
