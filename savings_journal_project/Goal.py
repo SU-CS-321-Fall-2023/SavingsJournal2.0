@@ -1,11 +1,106 @@
-from urllib import request
+# jsonable encoder
+# bson
+# pydantic
+# routing
+from typing import Optional
+from pymongo import ReturnDocument
+
+import flask
 from savings_journal_project.PydanticObjectId import PydanticObjectId
-from savings_journal_project.app import db
+from app import db, app
+import User
+from flask import Flask, request, jsonify, Resource
+from pydantic import BaseModel, Field
 from datetime import date
-from flask import Flask, request, jsonify
-from pymongo.collection import ReturnDocument
 
 
+class Goal(User, BaseModel, Resource):  # each goal will have the user ID
+    id: Optional[PydanticObjectId] = Field(None, alias="_id")
+    username: str
+    slug: str
+    title: str
+    amount: int
+    deadline: date
+    notes: str
+
+    def to_json(self):
+        return jsonable_encoder(self, exclude_none=True)
+
+    def to_bson(self):
+        data = self.dict(by_alias=True, exclude_none=True)
+        if data["_id"] is None:
+            data.pop("_id")
+        return data
+
+    # @app.route("/savings_journal/post/<string: title>", methods=['POST']) # create new entry on savings journal page
+    # @app.route("/goals/post/<string:title>", methods=['POST']) #create new entry on goals page
+
+    # make sure the username is in here properly
+    # return a list of goals
+    # might not need to add username to goal if goals are connected to user in the goal list
+    @app.route("/user/<string:username>/goal/", methods=['GET'])
+    def list_user_goals(self, username):
+        # get all goals for the user
+        user_goals = db.goals.find({"username": username})  # find goals by user _id
+        user_goal_list = []
+        if user_goals:
+            for goal in user_goals:
+                user_goal_list.add((Goal(**goal).to_json()))
+
+            return user_goal_list()
+        else:
+            flask.abort(404, 'Goal not found')
+
+
+    @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
+    def get_goal(self, username, _id):
+        # get one goal
+        goal = db.goals.find_one_or_404({'username': username},
+                                        {'_id': _id})
+        return Goal(**goal).to_json()
+
+    @app.route("/goal/<PydanticObjectId:_id>", methods=['DELETE'])
+    def delete_goal(self, _id):
+        # delete a  goal
+        goal = db.goals.find_one_or_404({'_id': _id})
+        if goal:
+            db.goals.remove(goal)
+        else:
+            flask.abort(404, 'Goal not found')
+
+    # done
+    @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['PATCH'])
+    def update_goal(self, username, _id):
+        goal = self.get_goal(username, _id)
+        # update goal entry
+        updated_goal = db.goals.find_one_and_update(
+            {"_id": _id},
+            {"$set": goal.to_bson()},
+            return_document=ReturnDocument.AFTER,
+        )
+        if updated_goal:
+            return Goal(**updated_goal.to_json())
+        else:
+            flask.abort(404, 'Goal not found')
+
+    # add the goal to the user goal list
+    @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['PATCH'])
+    def update_goal_list(self, username, _id):
+        goal = self.get_goal(username, _id)
+        # update goal entry
+        updated_user = db.users.find_one_and_update(
+            {"username": username},
+            {'goals': }
+            {"$set": goal.to_bson()},
+            return_document=ReturnDocument.AFTER,
+        )
+        if updated_user:
+            return User(**updated_user.to_json())
+        else:
+            flask.abort(404, 'Goal not found')
+
+
+"""
 class Goal(Resource):
 
     def __init__(self, title, amount, deadline, notes):
@@ -83,8 +178,6 @@ class Goal(Resource):
         else:
             flask.abort(404, 'Goal not found')
 
-
-"""
     def save_goal_info(self, goal_ID, title, amount, deadline, notes):
         # save to Mongo in dictionary type style
         # Mongodb document (JSON-style) inserting into collection
@@ -114,6 +207,5 @@ class Goal(Resource):
     def get_goal_info(self, user_ID, goal_ID):
 
     def update_goal(self, goal):
-    """
 
-
+"""

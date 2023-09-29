@@ -1,3 +1,4 @@
+"""
 from savings_journal_project.PydanticObjectId import PydanticObjectId
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -111,3 +112,4 @@ class Goal(User, BaseModel, Resource):  # each goal will have the user ID
         else:
             flask.abort(404, 'Goal not found')
 
+"""

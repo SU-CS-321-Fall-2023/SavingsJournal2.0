@@ -4,43 +4,64 @@
 # for app.py file
 # connecting Flask, App to Mongo Database
 
-# how do we make entries on the web page?
-    # how do the users type
-    # how is the data received?
-# when are we calling these functions? or are they called by the routings?
 from pymongo.server_api import ServerApi
-from flask import Flask
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, session, redirect
 from pymongo import MongoClient
-from flask_restful import Resource
 import Goal
 import User
-import collections_models
+import bcrypt
 
 app = Flask(__name__)
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client.flask_db
-users = db.users
-goals = db.goals
+# db.users
+# db.goals
 
-client.add_resource(User, '/')
-client.add_resource(Goal, '/')
-client.add_resource(collections_models.py, '/')
+client.add_resource(User, '/user/<string:username>')
+client.add_resource(Goal, '/user/<string:username/goal/<string:title>')
+
+@app.route('/index')
+def index(): # adjust this to go to whatever page we want it to go to after logging in
+    if 'username' in session:
+        return 'Welcome, ' + session['username'] + '!'
+    return render_template('index.html')
 
 
-# code to insert/ do whatever operations
+@app.route("/signup", methods=['POST', 'GET'])
+def signup():
+    # allow user to register if post
+    if request.method == 'POST':
+        user = db.users.find_one({'username': request.form['username']})
+        if user is None:
+            hashed = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            db.users.insert({'username': request.form['username'], 'password': hashed, 'email': request.form['email']})
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+        return redirect(url_for('signin'))  # where user exists already
+    return render_template('signup.html')  # where it's a get not a post request
 
+
+@app.route('/signin', methods=['POST'])
+def signin():
+    user = db.users.find_one({'username': request.form['username']})
+    if user:  # compare passwords
+        if bcrypt.hashpw(request.form['password'].encode('utf-8'), user['password'].encode('utf-8')) == \
+                user['password'].encode('utf-8'):
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+        return 'Invalid username or password.'
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+
+# mongo connection closes
 client.close()
-# signup
-# log in
-# log out
-# homepage
-@app.route("/")
-def home_page():
-    online_users = mongo.db.users.find({"online": True})
-    return render_template("index.html",
-        online_users=online_users)
+
 
 """
 
@@ -61,7 +82,6 @@ user_1.add_goal(goal_1)
 user_1.delete_goal(goal_1)
 
 """
-
 
 """
 import os
