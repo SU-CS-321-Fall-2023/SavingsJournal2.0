@@ -1,8 +1,34 @@
 {% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+<script src="{{url_for('static',filename='scripts/savings_journal.js')}}"></script>
+{% endblock %}
 {% block content %}
-<div class="content">
-        <div class = "displayBox">
-        <p class="display-btn"></p>
-    </div>   
+
+<div class="container">
+    <div class="mx-auto text-center flex flex-col items-center">
+        <!-- Heading -->
+        <div class="text-4xl font-bold text-red-400">
+            Savings Journal
+        </div>
+
+        <!-- Buttons Group -->
+        <div class="space-x-2 mt-4">
+            <button type="button" class="text-black hover:bg-red-200 text-md px-5 py-2.5 rounded-2xl transition ease-in-out delay-100">
+                Done
+            </button>
+            <button type="button" class="text-black hover:bg-red-200 text-sm px-5 py-2.5 rounded-2xl transition ease-in-out delay-100">
+                Doing
+            </button>
+            <button type="button" class="text-black hover:bg-red-200 text-sm px-5 py-2.5 rounded-2xl transition ease-in-out delay-100">
+                Todo
+            </button>
+        </div>
+    </div>
 </div>
+
+        
+
+
 {% endblock %}
