@@ -1,11 +1,11 @@
-# objectid.py
+"""# objectid.py
 from bson import ObjectId
-from pydantic.json import ENCODER_BY_TYPE
+#from pydantic.json import ENCODER_BY_TYPE
 
 class PydanticObjectId(ObjectId):
-    """
+
     ObjectId field. Compatible with Pydantic.
-    """
+
 
     @classmethod
     def __get_validators__(cls):
@@ -21,5 +21,5 @@ class PydanticObjectId(ObjectId):
             type="string",
             examples=["5eb7cf5a86d9755df3a6c593", "5eb7cfb05e32e07750a1756a"],
         )
-
-ENCODERS_BY_TYPE[PydanticObjectId] = str
+"""
+#ENCODERS_BY_TYPE[PydanticObjectId] = str

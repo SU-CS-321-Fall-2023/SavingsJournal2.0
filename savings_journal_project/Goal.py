@@ -3,19 +3,20 @@
 # pydantic
 # routing
 from typing import Optional
+"""
 from pymongo import ReturnDocument
 
 import flask
-from savings_journal_project.PydanticObjectId import PydanticObjectId
-from app import db, app
+import app
+#from savings_journal_project.PydanticObjectId import PydanticObjectId
 import User
-from flask import Flask, request, jsonify, Resource
+from flask import Flask, request, jsonify
 from pydantic import BaseModel, Field
 from datetime import date
-
+from flask_restful import Resource
 
 class Goal(User, BaseModel, Resource):  # each goal will have the user ID
-    id: Optional[PydanticObjectId] = Field(None, alias="_id")
+    #id: Optional[PydanticObjectId] = Field(None, alias="_id")
     username: str
     slug: str
     title: str
@@ -23,14 +24,14 @@ class Goal(User, BaseModel, Resource):  # each goal will have the user ID
     deadline: date
     notes: str
 
-    def to_json(self):
-        return jsonable_encoder(self, exclude_none=True)
+    #def to_json(self):
+        #return jsonable_encoder(self, exclude_none=True)
 
-    def to_bson(self):
-        data = self.dict(by_alias=True, exclude_none=True)
-        if data["_id"] is None:
-            data.pop("_id")
-        return data
+    #def to_bson(self):
+        #data = self.dict(by_alias=True, exclude_none=True)
+        #if data["_id"] is None:
+            #data.pop("_id")
+        #return data
 
     # @app.route("/savings_journal/post/<string: title>", methods=['POST']) # create new entry on savings journal page
     # @app.route("/goals/post/<string:title>", methods=['POST']) #create new entry on goals page
@@ -85,13 +86,12 @@ class Goal(User, BaseModel, Resource):  # each goal will have the user ID
 
     # add the goal to the user goal list
     @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['PATCH'])
-    def update_goal_list(self, username, _id):
+    def update_goal_list(self, username, _id, field, data):
         goal = self.get_goal(username, _id)
         # update goal entry
         updated_user = db.users.find_one_and_update(
             {"username": username},
-            {'goals': }
-            {"$set": goal.to_bson()},
+            {"$set": {field: data}},
             return_document=ReturnDocument.AFTER,
         )
         if updated_user:
@@ -100,6 +100,7 @@ class Goal(User, BaseModel, Resource):  # each goal will have the user ID
             flask.abort(404, 'Goal not found')
 
 
+"""
 """
 class Goal(Resource):
 
