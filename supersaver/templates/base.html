@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+{%block head %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperSaver</title>
     <!-- Link to the stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
 </head>
-<body>
+{% endblock %}
 
+<body>
+<!-- Navbar -->
+<div class="navbar">
+    <div class="icon-text-group">
+        <img src="{{ url_for('static', filename='img/journal.png') }}" alt="Icon" class="navbar-icon">
+        <span>SuperSaver</span>
+    </div>
+    <div class="button-group">
+        <a href="{{ url_for('spending_habits') }}">Spending Habits</a>
+        <a href="{{ url_for('total_savings') }}">Total Savings</a>
+
+        <div class = "savingsBtn">
+        <a href="{{ url_for('savings_journal') }}" class="red-btnSavings">Savings Journal</a>
+    </div>
+    </div>
+</div>
 {% block content %}
 <!-- This is where the content of the extended templates will be placed -->
 {% endblock %}
