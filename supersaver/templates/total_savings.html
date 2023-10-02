@@ -1,0 +1,40 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Navbar -->
+<div class="navbar">
+    <div class="icon-text-group">
+        <img src="{{ url_for('static', filename='img/journal.png') }}" alt="Icon" class="navbar-icon">
+        <span>SuperSaver</span>
+    </div>
+    <div class="button-group">
+        <a href="{{ url_for('spending_habits') }}">Spending Habits</a>
+        <a href="{{ url_for('savings_journal') }}">Savings Journal</a>
+
+        <div class = "savingsBtn">
+        <a href="{{ url_for('index') }}" class="red-btnSavings">Home</a>
+    </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="contentTotal">
+    <!--<img src="{{ url_for('static', filename='img/moneytree2.jpg') }}" alt="Big Image" class="big-image">-->
+    <div>
+        <h1 class = 'TotalSavingsNeeded'>Total Savings Needed</h1>
+        <div class = "progressBg"></div>
+        <div class = "totalSavingsBg">
+        <h1 class="totalNumbers">$46,027.09</h1>
+        <p class="motivationalSpeech">Keep going! You're almost there!</p>
+    </div>
+    </div>
+</div>
+
+<!-- Line Separator -->
+
+<!-- Additional sections as described -->
+<!-- ... -->
+
+
+{% endblock %}
