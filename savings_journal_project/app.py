@@ -11,7 +11,7 @@ class User(BaseModel):
     username: str
     email: str
     password: str
-    goals: Optional[List] # goal ids
+    goals: Optional[List]  # goal ids
 
 
 class Goal(BaseModel):  # each goal will have the username
@@ -175,6 +175,9 @@ def goal(_id):
         except ValidationError as e:
             return e
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # mongo connection closes
 # client.close()
