@@ -17,7 +17,7 @@ class User(BaseModel):
 class Goal(BaseModel):  # each goal will have the username
     title: str
     amount: int
-    deadline: date
+    deadline: str(date)
     notes: Optional[str]
     username: str
 
@@ -25,11 +25,9 @@ class Goal(BaseModel):  # each goal will have the username
 app = Flask(__name__)
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=ServerApi('1'))
-db = client.flask_db
-
-
-# db.users
-# db.goals
+db = client.db
+users = db.users
+goals = db.goals
 
 # client.add_resource(User, '/user/<string:username>')
 # client.add_resource(Goal, '/user/<string:username/goal/<string:title>')
@@ -61,7 +59,7 @@ def index2():  # adjust this to go to whatever page we want it to go to after lo
 def signup():  # gets username, password, email and adds to user collection
     # allow user to register if post
     if request.method == 'POST':
-        user = db.users.find_one({'username': request.form['username']})
+        user = users.find_one({'username': request.form['username']})
         if user is None:
             hashed = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             add_user(hashed)
@@ -82,7 +80,7 @@ def signin():
             return redirect(url_for('index2')) # takes you to page for savings journal menu
         return 'Invalid username or password.'
 
- 
+
 @app.route('/logout/')
 def logout():
     session.pop('username', None)
@@ -92,7 +90,7 @@ def logout():
 def add_goal(goal_id):
     # add new goal to the user's list of goals
     # don't need to return anything or connect to a routing
-    user = db.users.find_one({'username': session['username']})
+    user = users.find_one({'username': session['username']})
     goals = user.get['goals']
     goals.append(goal_id)
 
