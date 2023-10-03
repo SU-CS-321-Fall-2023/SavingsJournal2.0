@@ -34,6 +34,7 @@ def index2():
 if __name__ == '__main__':
     app.run(debug=True)
 
+#SKYLAR CODE
 
 from pymongo.server_api import ServerApi
 from flask import Flask, render_template, request, url_for, session, redirect, flash
@@ -98,6 +99,7 @@ def signup():  # gets username, password, email and adds to user collection
             hashed = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             add_user(hashed)
             session['username'] = request.form['username']
+            flash(session['username'])
             return redirect(url_for('index'))
         return redirect(url_for('signin'))  # where user exists already
     return render_template('signup.html')  # where it's a get not a post request
@@ -202,4 +204,4 @@ def goal(_id):
 
 
 # mongo connection closes
-client.close()
+#client.close()
