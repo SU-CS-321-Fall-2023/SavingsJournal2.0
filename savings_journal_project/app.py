@@ -82,7 +82,7 @@ def signin():
             return redirect(url_for('index2')) # takes you to page for savings journal menu
         return 'Invalid username or password.'
 
- m
+ 
 @app.route('/logout/')
 def logout():
     session.pop('username', None)
@@ -171,7 +171,7 @@ def goal(_id):
                                                            })
         try:  # check schema after update
             Goal.model_validate_json(goal)
-            return render_template('goal/<goal_id>.html', goal_id=goal_id)  # view the goal
+            return render_template('goal/<goal_id>.html', goal_id=goal['_id'])  # view the goal
         except ValidationError as e:
             return e
 
