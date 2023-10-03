@@ -13,6 +13,8 @@ body {
 .icon-text-group {
     display: flex;
     align-items: center;
+    position: relative;
+    top: -20px;
 }
 
 .navbar a {
@@ -26,6 +28,9 @@ body {
 .button-group {
     display: flex;
     gap: 10px;  /* Adjust this to change the spacing between the buttons */
+    font-size: 20px;
+    position: relative;
+    right:20px;
     
 }
 
@@ -38,12 +43,11 @@ body {
 .big-image {
     width: 500px; 
     height: 400px; 
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); 
+    box-shadow: -15px /*20px*/ 20px rgba(0, 0, 0, 0.3); 
     border-radius: 5px;
     position: relative;  /* This allows manual positioning */
     right: -100px;  /* This moves the image 30px to the left */
 }
-
 
 
 .content {
@@ -63,6 +67,8 @@ body {
     color: inherit;
     transition: all 0.3s;
     display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: .8em;
 }
 
 .red-btn:hover {
@@ -70,6 +76,24 @@ body {
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
+.savingsBtn{
+    background-color: #FFD1D1;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 12px 20px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    top: -9px;
+}
+.savingsBtn:hover {
+    background-color: #FFB0B0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
 
 hr {
     width: 80%;
@@ -97,5 +121,182 @@ p {
     font-size: 2em; 
     right: -150px; 
 }
+.coins-image {
+    width: 400px; 
+    height: 250px; 
+    box-shadow: 15px /*20px*/ 12px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -700px;  /* This moves the image 30px to the left */
+}
+.coins-text {
+    font-size: 2em;  /* Adjust this value for the desired font size */
+    text-align: left;
+    position: relative;  /* This allows manual positioning */
+    right: 700px;  /* This moves the image 30px to the left */
+}
+.jar-image {
+    width: 400px; 
+    height: 250px; 
+    box-shadow: -15px /*20px*/ 12px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -180px;  /* This moves the image 30px to the left */
+}
+.jar-text {
+    font-size: 2em;  /* Adjust this value for the desired font size */
+    text-align: left;
+    position: relative;  /* This allows manual positioning */
+    right: 180px;  /* This moves the image 30px to the left */
+}
+.wallet-image {
+    width: 400px; 
+    height: 250px; 
+    box-shadow: 15px /*20px*/ 12px rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    position: relative;  /* This allows manual positioning */
+    right: -700px;  /* This moves the image 30px to the left */
+}
+.wallet-text {
+    font-size: 2em;  /* Adjust this value for the desired font size */
+    text-align: left;
+    position: relative;  /* This allows manual positioning */
+    right: 700px;  /* This moves the image 30px to the left */
+}
+.displayBox{
+   background-color: #FFD1D1;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 60px 140px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    top: 200px;
+    right: -455px;
+}
+.Sign-in-txt{
+    font-size: 3em;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    left: 190px;  /* This moves the image 30px to the left */
+    top: -100px;
+    color: #ff8c8c;
+    font-weight: 100;
+}
+.signInBg{
+    background-color: #ff8c8c;
+    box-shadow: -15px /*5px*/ 15px rgba(0, 0, 0, 0.2);
+    padding: 190px 150px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    right: -370px;
+    top: -100px;
+}
+.usernameSignIn{
+    font-size: 30px;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    left: -100px;  /* This moves the image 30px to the left */
+    top: -150px;
+    color: white;
+    font-weight: 100;
+}
 
-
+.passwordSignIn{
+    font-size: 30px;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    left: -100px;  /* This moves the image 30px to the left */
+    top: -100px;
+    color: white;
+    font-weight: 100;
+}
+#textbox1{
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: -4px /*5px*/ 4px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    color: #333;
+    position: relative;
+    top: -210px;
+    right: -65px;
+  }
+  
+  #textbox1:focus {
+    outline: none;
+    border-color: rgb(255, 204, 212);
+    /*box-shadow: 0 0 5px rgba(253, 90, 117);*/
+  }
+  #textbox2{
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: -4px /*5px*/ 4px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    color: #333;
+    position: relative;
+    right: -65px;
+    top: -160px;
+  }
+  #textbox2:focus{
+    outline: none;
+    border-color: rgb(255, 204, 212);
+    /*box-shadow: 0 0 5px blue;*/
+  }
+  .password{
+    position: relative;
+    top:-50px;
+  }
+  .enterBtn{
+    background-color: white;
+    box-shadow: -4px/* 5px*/ 4px rgba(0, 0, 0, 0.2);
+    padding: 0px 80px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    display: inline-block; /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 5px;
+    font-size: 1em;
+    position: relative;  /* This allows manual positioning */
+    top: -110px;
+}
+.enterBtn:hover {
+    background-color: #fcebeb;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+.enter-btn{
+    position: relative;  /* This allows manual positioning */
+    font-size: 2em; 
+    text-decoration: none;
+    color: #ff7878;
+}
+.signUptxt{
+    font-size: 25px;
+    font-weight:100px;
+    position: relative;
+    bottom: 50px;
+}
+.Sign-upBtn{
+    position: relative;  /* This allows manual positioning */
+    font-size: 25px; 
+    /*text-decoration: none*/
+    color: black;
+    font-weight: 100px;
+    bottom: 105px;
+    left: 125px;
+}
+  
+  
