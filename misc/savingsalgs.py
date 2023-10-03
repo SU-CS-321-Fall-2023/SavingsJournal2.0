@@ -1,4 +1,4 @@
-import Goal
+# import Goal
 from flask import Flask, request
 
 
@@ -36,8 +36,10 @@ class SavingsAlgorithms:
         # rewritten to no longer need extra variables
         # need user_goal_list from list_goals() (define it separately, reset it when list_goals() is run)
         totalneeded = 0  # so previous counts don't affect the recalculations
-        for Goal in user_goal_list:
-            totalneeded += Goal.amount
+        goal_list = get_goal_list  # from app.py
+        if goal_list:
+            for Goal in goal_list:
+                totalneeded += Goal.amount
         # as money is saved, compile it
         # for savingsacquired: currentsavings += savings
         totalNumbers = totalneeded  # - currentsavings
