@@ -45,14 +45,19 @@ def add_user(hashed):
         print(e)
 
 
-@app.route('/index')
+@app.route('/')
 def index():  # adjust this to go to whatever page we want it to go to after logging in
-    if 'username' in session:
-        return 'Welcome, ' + session['username'] + '!'
-    return render_template('index.html')
+    #if 'username' in session:
+        #return 'Welcome, ' + session['username'] + '!'
+    return render_template('index.html') # sign in menu
 
+@app.route('/index2/')
+def index2():  # adjust this to go to whatever page we want it to go to after logging in
+    #if 'username' in session:
+        #return 'Welcome, ' + session['username'] + '!'
+    return render_template('index2.html/') # savings journal menu
 
-@app.route("/signup", methods=['POST', 'GET'])
+@app.route("/signup/", methods=['POST', 'GET'])
 def signup():  # gets username, password, email and adds to user collection
     # allow user to register if post
     if request.method == 'POST':
@@ -61,23 +66,24 @@ def signup():  # gets username, password, email and adds to user collection
             hashed = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             add_user(hashed)
             session['username'] = request.form['username']
-            return redirect(url_for('index'))
+            # flash(session['username'])
+            return redirect(url_for('index2'))
         return redirect(url_for('signin'))  # where user exists already
     return render_template('signup.html')  # where it's a get not a post request
 
 
-@app.route('/signin', methods=['POST'])
+@app.route('/signin/', methods=['POST'])
 def signin():
     user = db.users.find_one({'username': request.form['username']})
     if user:  # compare passwords
         if bcrypt.hashpw(request.form['password'].encode('utf-8'), user['password'].encode('utf-8')) == \
                 user['password'].encode('utf-8'):
             session['username'] = request.form['username']
-            return redirect(url_for('index'))
+            return redirect(url_for('index2')) # takes you to page for savings journal menu
         return 'Invalid username or password.'
 
-
-@app.route('/logout')
+ m
+@app.route('/logout/')
 def logout():
     session.pop('username', None)
     return redirect(url_for('signin'))
@@ -100,7 +106,7 @@ def remove_goal(goal_id):
 
 
 # does the context for goal/goal_id have to be goal_id or _id or just goal?
-@app.route("/goal", methods=['POST', 'GET'])
+@app.route("/goal/", methods=['POST', 'GET'])
 def create_goal():
     # create goal--adding data to mongo and going back to savings journal page (or goal page?)
     if request.method == 'POST':
@@ -116,7 +122,7 @@ def create_goal():
             Goal.model_validate_json(goal)
             db.goals.insert_one(goal)
             add_goal(username, goal['_id'])
-            return render_template('goal/<goal_id>.html', goal=goal)
+            return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
         except ValidationError as e:
             return e
     return render_template('goal.html')  # if a GET request (just the blank goal form)
@@ -124,15 +130,21 @@ def create_goal():
 
 # @app.route("/user/<string:username>/goal/", methods=['GET'])
 # can't edit anything on this page so no Posting, Deleting, or Patching
-@app.route("/savings_journal/", methods=['GET'])
-def list_goals():
-    # list all goals for the user
+def get_goal_list():
     username = session['username']
     user_goals = db.goals.find({"username": username})  # find goals by user _id
     user_goal_list = []
     if user_goals:
         for goal in user_goals:
             user_goal_list.add(goal)
+        return user_goal_list
+    return None # if no user goals
+
+@app.route("/savings_journal/", methods=['GET'])
+def list_goals():
+    # list all goals for the user
+    user_goal_list = get_goal_list()
+    if user_goal_list():
         return render_template('savings_journal.html', goals=user_goal_list)
     return redirect(url_for('goal'))  # if no goals exist yet, give option to create one
 
@@ -140,7 +152,7 @@ def list_goals():
 # @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
 # access a single goal only through the savings journal page where all the goals are
 # so put savings journal in the route?
-@app.route("/goal/<goal_id>", methods=['GET', 'DELETE', 'PATCH'])
+@app.route("/goal/<goal_id>/", methods=['GET', 'DELETE', 'PATCH'])
 def goal(_id):
     goal = db.goals.find_one_or_404({'_id': _id})
     if request.method == 'GET':
@@ -159,13 +171,13 @@ def goal(_id):
                                                            })
         try:  # check schema after update
             Goal.model_validate_json(goal)
-            return render_template('goal/<goal_id>.html', goal=goal)  # view the goal
+            return render_template('goal/<goal_id>.html', goal_id=goal_id)  # view the goal
         except ValidationError as e:
             return e
 
 
 # mongo connection closes
-client.close()
+# client.close()
 
 """
     @app.route("/savings_journal/post/<string:goal._id>", methods=['POST']) # create new entry on savings journal page
