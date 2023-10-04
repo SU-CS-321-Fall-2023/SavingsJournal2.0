@@ -1,4 +1,4 @@
-"""
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -58,7 +58,7 @@ def index2():
 
 if __name__ == '__main__':
     app.run(debug=True)
-"""
+
 # SKYLER CODE
 
 from pymongo.server_api import ServerApi
