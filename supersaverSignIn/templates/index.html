@@ -1,5 +1,5 @@
 <!-- templates/index.html -->
-{% extends "base.html" %}
+{% extends "base2.html" %}
 
 {% block content %}
 <!-- Navbar -->
@@ -17,12 +17,11 @@
     </div>
     </div>
 </div>
-
 <!-- Main Content -->
 <div class="content">
     <img src="{{ url_for('static', filename='img/moneytree2.jpg') }}" alt="Big Image" class="big-image">
     <div>
-        <h1>Changing <br>savings one <br>day at a time</h1>
+        <h1 class = "ChangingSavings">Changing <br>savings one <br>day at a time</h1>
         <p>Join now and get 50% off <br> and the deal of a lifetime <br>right before your eyes</p>
         <div class = "startBtn">
         <a href="{{ url_for('signUp') }}" class="red-btn">Start Now</a>
