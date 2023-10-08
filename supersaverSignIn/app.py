@@ -1,55 +1,62 @@
-
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/') # login/ signup buttons on top
+
+@app.route('/')  # login/ signup buttons on top
 def index():
     return render_template('index.html')
+
 
 @app.route('/signIn/')
 def signIn():
     return render_template('signIn.html')
 
+
 @app.route('/signUp/')
 def signUp():
     return render_template('signUp.html')
+
 
 @app.route('/spending_habits/')
 def spending_habits():
     return render_template('spending_habits.html')
 
+
 @app.route('/total_savings/')
 def total_savings():
     return render_template('total_savings.html')
 
+
 goals = [
-  {
-    'name': 'Vacation', 
-    'description': 'Trip to Hawaii',
-    'amount': 5000,
-    'deadline': '2024-06-30',
-    'status': 'todo'
-  },
-  {
-    'name': 'Car',
-    'description': 'Downpayment on new car',
-    'amount': 15000, 
-    'deadline': '2025-05-01',
-    'status': 'done'
-  },
-  {
-    'name': 'Roof',
-    'description': 'Fix roof',
-    'amount': 8000,
-    'deadline': '2023-11-15', 
-    'status': 'doing'
-  }
+    {
+        'name': 'Vacation',
+        'description': 'Trip to Hawaii',
+        'amount': 5000,
+        'deadline': '2024-06-30',
+        'status': 'todo'
+    },
+    {
+        'name': 'Car',
+        'description': 'Downpayment on new car',
+        'amount': 15000,
+        'deadline': '2025-05-01',
+        'status': 'done'
+    },
+    {
+        'name': 'Roof',
+        'description': 'Fix roof',
+        'amount': 8000,
+        'deadline': '2023-11-15',
+        'status': 'doing'
+    }
 ]
+
 
 @app.route('/savings_journal/')
 def savings_journal():
     return render_template('savings_journal.html', goals=goals)
+
 
 @app.route('/index2/')
 def index2():
@@ -107,7 +114,8 @@ def add_user(hashed):
     except ValidationError as e:
         print(e)
 
-@app.route('/')  # login/ signup buttons on top
+
+@app.route('/', methods=['GET'])  # login/ signup buttons on top
 def index():  # adjust this to go to whatever page we want it to go to after logging in
     return render_template('index.html')
     # if 'username' in session:
@@ -115,7 +123,7 @@ def index():  # adjust this to go to whatever page we want it to go to after log
     # return render_template('index.html')
 
 
-@app.route('/index2/')  # savings tabs on top
+@app.route('/index2/', methods=['GET'])  # savings tabs on top
 def index2():  # adjust this to go to whatever page we want it to go to after logging in
     return render_template('index2.html')
 
@@ -189,7 +197,7 @@ def remove_goal(goal_id):
 def create_goal():
     # create goal--adding data to mongo and going back to savings journal page (or goal page?)
     if request.method == 'POST':
-        #if 'username' in session:
+        # if 'username' in session:
         username = session['username']
         goal = {
             "title": request.form['title'],  # required
@@ -213,11 +221,11 @@ def create_goal():
 def get_goal_list():
     if 'username' in session:
         username = session['username']
-    # user_goals = db.goals.find({"username": username})  # find goals by user _id
+        # user_goals = db.goals.find({"username": username})  # find goals by user _id
         user = users.find_one({"username": username})  # get the user
         user_goal_list = user.get['goals']  # get their list of goals
         if user_goal_list:
-         # for goal in user_goal_list:
+            # for goal in user_goal_list:
             # user_goal_list.add(goal)
             return user_goal_list
         return None  # if no user goals
@@ -229,10 +237,10 @@ def savings_journal():
     user_goal_list = get_goal_list()
     if user_goal_list is None:
         return redirect(url_for('index2'))
-    
+
     return render_template('savings_journal.html', goals=user_goal_list)
-    #return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one
-    
+    # return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one
+
 
 # @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
 # access a single goal only through the savings journal page where all the goals are

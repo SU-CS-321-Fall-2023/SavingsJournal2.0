@@ -16,26 +16,28 @@
     <div>
         <h1 class = "Sign-in-txt">Sign up</h1>
         <!--<p>Join now and get 50% off <br> and the deal of a lifetime <br>right before your eyes</p-->
-        <div class = "signInBg">
-            <p class = "usernameSignIn">username: </p>
+        <form action="/signUp/" method='POST'>
+            <div class = "signInBg">
+                <p class = "usernameSignIn">username: </p>
 
-           <!--USERNAME TEXT BOX--> <input type="text" name="usernameText" id="textbox1">
+            <!--USERNAME TEXT BOX--> <input type="text" name="username" id="textbox1">
 
-        <div class = "password">
-            <p class = "passwordSignIn">password: </p> 
+            <div class = "password">
+                <p class = "passwordSignIn">password: </p>
 
-            <!--PASSWORD TEXT BOX--><input type="text" name="passwordText" id="textbox2">
+                <!--PASSWORD TEXT BOX--><input type="password" name="password" id="textbox2">
 
+            </div>
+
+            <div class = "enterBtn">
+                <input type="submit" value="Sign Up", class = "enter-btn">
+                <!--ENTER BUTTON <a href="{{ url_for('index2') }}" class="enter-btn">Enter</a> -->
+            </div>
+
+            <p class ="signUptxt">Already have an<br>account? </p>
+            <a href="{{ url_for('signIn') }}" class = "Sign-upBtn">Sign In</a>
         </div>
-
-        <div class = "enterBtn">
-            <!--ENTER BUTTON--><a href="{{ url_for('index2') }}" class="enter-btn">Enter</a>
-        </div>
-        
-        <p class ="signUptxt">Already have an<br>account? </p>
-        <a href="{{ url_for('signIn') }}" class = "Sign-upBtn">Sign In</a>
-    </div>
-
+        </form>
     </div>
 </div>
 
