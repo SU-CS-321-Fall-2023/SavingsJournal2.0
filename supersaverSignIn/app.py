@@ -1,4 +1,4 @@
-"""
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -23,9 +23,33 @@ def spending_habits():
 def total_savings():
     return render_template('total_savings.html')
 
+goals = [
+  {
+    'name': 'Vacation', 
+    'description': 'Trip to Hawaii',
+    'amount': 5000,
+    'deadline': '2024-06-30',
+    'status': 'todo'
+  },
+  {
+    'name': 'Car',
+    'description': 'Downpayment on new car',
+    'amount': 15000, 
+    'deadline': '2025-05-01',
+    'status': 'done'
+  },
+  {
+    'name': 'Roof',
+    'description': 'Fix roof',
+    'amount': 8000,
+    'deadline': '2023-11-15', 
+    'status': 'doing'
+  }
+]
+
 @app.route('/savings_journal/')
 def savings_journal():
-    return render_template('savings_journal.html')
+    return render_template('savings_journal.html', goals=goals)
 
 @app.route('/index2/')
 def index2():
@@ -34,7 +58,7 @@ def index2():
 
 if __name__ == '__main__':
     app.run(debug=True)
-"""
+
 # SKYLER CODE
 
 from pymongo.server_api import ServerApi
@@ -204,9 +228,11 @@ def savings_journal():
     # list all goals for the user
     user_goal_list = get_goal_list()
     if user_goal_list is None:
-        return render_template('savings_journal.html', goals=user_goal_list)
+        return redirect(url_for('index2'))
+    
+    return render_template('savings_journal.html', goals=user_goal_list)
     #return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one
-    return redirect(url_for('index2'))
+    
 
 # @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
 # access a single goal only through the savings journal page where all the goals are

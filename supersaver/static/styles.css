@@ -161,6 +161,23 @@ p {
     position: relative;  /* This allows manual positioning */
     right: 700px;  /* This moves the image 30px to the left */
 }
+
+.TotalSavingsNeeded{
+    font-size: 4em;  /* Adjust this value for the desired font size */
+    position: relative;  /* This allows manual positioning */
+    right: 0px;  /* This moves the image 30px to the left */
+    top: -40px;
+    color: #ff8c8c;
+}
+.totalSavingsBg{
+    background-color: #ff8c8c;
+    box-shadow: 20px /*5px*/ 20px rgba(0, 0, 0, 0.2);
+    position:relative;
+    padding: 40px 250px;  /* Adjust this to your desired size */
+    right: -150px;
+    border-radius: 10px;
+}
+
 .displayBox{
    background-color: #FFD1D1;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
@@ -173,7 +190,47 @@ p {
     border-radius: 5px;
     font-size: 1em;
     position: relative;  /* This allows manual positioning */
-    top: 200px;
-    right: -455px;
+    right: -150px;
+    top: -50px;
+}
+.totalNumbers{
+    color:white;
+    position: relative;  /* This allows manual positioning */
+    right: 130px;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 3em;
+}
+.motivationalSpeech{
+    color:white;
+position: relative;  /* This allows manual positioning*/
+    right: -10px;
+    font-style: italic;
+    font-weight: 100;
+    top: 10px;
+}
+.progressBg{
+    background-color: #ff8c8c;
+    box-shadow: 20px /*5px*/ 20px rgba(0, 0, 0, 0.2);
+    padding: 20px 20px;  /* Adjust this to your desired size */
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+     /* This will help the anchor tag respect padding and other block-level properties */
+    border-radius: 25px;
+    position: relative;  /* This allows manual positioning */
+    top: -30px;
+    left: 150px;
+    
+}
+.contentTotal{
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    justify-content: space-between;
+    position: relative;
+    top: px;
+    
 }
 

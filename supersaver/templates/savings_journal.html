@@ -1,8 +1,52 @@
 {% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+<script src="{{url_for('static',filename='scripts/savings_journal.js')}}"></script>
+{% endblock %}
 {% block content %}
-<div class="content">
-        <div class = "displayBox">
-        <p class="display-btn"></p>
-    </div>   
+
+<div class="container">
+    <div class="mx-auto text-center flex flex-col items-center">
+        <!-- Heading -->
+        <div class="text-4xl font-bold text-red-400">
+            Savings Journal
+        </div>
+
+        <!-- Buttons Group -->
+        <div class="space-x-2 mt-4 mb-10">
+            <button type="button" class="text-black hover:bg-red-200 text-md px-5 py-2.5 rounded-2xl transition ease-in-out delay-100">
+                Done
+            </button>
+            <button type="button" class="text-black hover:bg-red-200 text-sm px-5 py-2.5 rounded-2xl transition ease-in-out delay-100">
+                Doing
+            </button>
+            <button type="button" class="text-black hover:bg-red-200 text-sm px-5 py-2.5 rounded-2xl transition ease-in-out delay-100">
+                Todo
+            </button>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for goal in goals %}    
+            <a class="block max-w-sm p-6 bg-red-200 rounded-lg shadow">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ goal.name }}</h5>
+                <p class="font-normal text-base text-gray-700">{{ goal.description }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+<!-- make a dive class that uses tailwindcss classes to make it a floating button that hangs at the bottom right of the page -->
+<div class="fixed bottom-0 right-0 mb-4 mr-4">
+<button
+class="p-0 w-16 h-16 bg-red-400 rounded-full hover:bg-red-600 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
+<svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6 inline-block">
+<path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
+                    C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                    C15.952,9,16,9.447,16,10z" />
+</svg>
+</button>
+</div>
+
 {% endblock %}
