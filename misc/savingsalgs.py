@@ -4,7 +4,7 @@ from flask import Flask, request
 
 class SavingsAlgorithms:
 
-    # currentsavings = 0  # how much $ has already been saved towwards all goals collectively
+    currentsavings = 0  # how much $ has already been saved towwards all goals collectively
     totalneeded = 0  # how much $ is needed for all goals to be completed 
     # recentlysaved = None  # 'temporary' value for when $ is made towards a goal
     # addedgoal = None  # 'temporary' value for freshly added goal amount -- link to Goal.amount
@@ -12,7 +12,10 @@ class SavingsAlgorithms:
 
     @app.route("/total_savings")
     def progressbar():
-        percent = currentsavings / totalneeded
+        if (currentsavings != 0):
+            percent = (currentsavings / totalneeded) * 100
+        else
+            percent = 0
         # commit to webpage -- progressBg
         # progress bar needs setup on html -- use percent variable here as % for progressbar to be filled
 
@@ -36,7 +39,7 @@ class SavingsAlgorithms:
         # rewritten to no longer need extra variables
         # need user_goal_list from list_goals() (define it separately, reset it when list_goals() is run)
         totalneeded = 0  # so previous counts don't affect the recalculations
-        goal_list = get_goal_list  # from app.py
+        goal_list = get_goal_list()  # from app.py
         if goal_list:
             for Goal in goal_list:
                 totalneeded += Goal.amount
@@ -46,3 +49,4 @@ class SavingsAlgorithms:
         # ^ subtract currently saved from total to see how much is still needed
         # do we have a function anywhere else to deal with money as it gets saved toward goals??
         progressbar()  # reflect changes in the progress bar
+        return totalneeded
