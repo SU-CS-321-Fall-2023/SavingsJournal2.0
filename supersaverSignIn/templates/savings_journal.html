@@ -30,8 +30,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for goal in goals %}    
             <a class="block max-w-sm p-6 bg-red-200 rounded-lg shadow">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ goal.name }}</h5>
-                <p class="font-normal text-base text-gray-700">{{ goal.description }}</p>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ goal.title }}</h5>
+                <p class="font-normal text-base text-gray-700">{{ goal.amount }}</p>
             </a>
             {% endfor %}
         </div>

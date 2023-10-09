@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
 # SKYLER CODE
 
-from pymongo.server_api import ServerApi
+import pymongo.server_api
 from flask import Flask, render_template, request, url_for, session, redirect, flash
 from pymongo import MongoClient
 import bcrypt
@@ -92,11 +92,12 @@ class User(BaseModel):
     username: str
     email: Optional[str] = None
     password: str
-    goals: Optional[List]  = None # goals as jsons
+    goals: Optional[List] = None  # goals as jsons
+
 
 app = Flask(__name__)
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
-client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, server_api=pymongo.server_api.ServerApi('1'))
 db = client.db
 users = db.users
 goals = db.goals
@@ -111,9 +112,10 @@ def add_user(hashed):
             'goals': []}
     try:
         user_obj = User(**user)
-        users.insert_one(user_obj.model_dump()) # inserts to collection as dictionary
+        users.insert_one(user_obj.model_dump())  # inserts to collection as dictionary
     except ValidationError as e:
         return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
+
 
 @app.route('/', methods=['GET'])  # login/ signup buttons on top
 def index():  # adjust this to go to whatever page we want it to go to after logging in
@@ -179,7 +181,7 @@ def add_goal(goal):
     user = users.find_one({'username': session['username']})
     goals = user['goals']
     goals.append(goal)  # add goal dictionary to user's list
-    users.update_one({'username': session['username']}, {'$set': {'goals': goals}}) # update user entry
+    users.update_one({'username': session['username']}, {'$set': {'goals': goals}})  # update user entry
 
 
 def remove_goal(goal_id):
@@ -191,6 +193,7 @@ def remove_goal(goal_id):
         if goal_id == goal.get['_id']:
             goals.remove(goal)
     users.update_one({'username': session['username']}, {'$set': {'goals': goals}})  # update user entry
+
 
 # does the context for goal/goal_id have to be goal_id or _id or just goal?
 @app.route("/create_goal/", methods=['POST', 'GET'])
@@ -209,17 +212,17 @@ def create_goal():
         try:
             goal_obj = Goal(**goal)
             goals.insert_one(goal_obj.model_dump())
-            add_goal(username, goal.model_dump()) # pass goal into add_goal as a dictionary
+            add_goal(username, goal.model_dump())  # pass goal into add_goal as a dictionary
             return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
         except ValidationError as e:
             return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
-        #if Goal.model_validate_json(dumps(goal)):
-            #goals.insert_one(goal) # then add to goal collection
-            #add_goal(username, dumps(goal)) # pass goal into add_goal as a dictionary
-            #return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
-        #else:
-         #   return 'Goal information cannot be added in this format.'
-    #return render_template('create_goal.html')  # if a GET request (just the blank goal form)
+        # if Goal.model_validate_json(dumps(goal)):
+        # goals.insert_one(goal) # then add to goal collection
+        # add_goal(username, dumps(goal)) # pass goal into add_goal as a dictionary
+        # return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
+        # else:
+        #   return 'Goal information cannot be added in this format.'
+    # return render_template('create_goal.html')  # if a GET request (just the blank goal form)
 
 
 # @app.route("/user/<string:username>/goal/", methods=['GET'])
@@ -231,6 +234,7 @@ def get_goal_list():
         user_goal_list = user['goals']  # get their list of goals
         return user_goal_list
 
+
 @app.route("/savings_journal/", methods=['GET'])
 def savings_journal():
     if 'username' in session:
@@ -240,7 +244,7 @@ def savings_journal():
             return render_template('savings_journal.html', goals=[])
             # return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one when this page is finished
         return render_template('savings_journal.html', goals=user_goal_list)
-
+        # return user_goal_list
 
 
 # @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
@@ -267,6 +271,7 @@ def goal(_id):
             return render_template('goal/<goal_id>.html', goal=goal)  # view the goal
         except ValidationError as e:
             return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
+
 
 if __name__ == '__main__':
     app.secret_key = uuid.uuid4().hex
