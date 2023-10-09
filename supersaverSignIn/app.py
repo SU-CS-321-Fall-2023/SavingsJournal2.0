@@ -94,13 +94,6 @@ class User(BaseModel):
     password: str
     goals: Optional[List]  = None # goals as jsons
 
-"""TEST USER
-{"_id":{"$oid":"65233833d4735672097414be"},
- "username":"sgipson",
- "password":{"$binary":{"base64":"JDJiJDEyJFphd1hVOEZsWGg0by41ckcyUk5zRE90VkwyOGxEcW52VXB6OTRIWnJYY0RnM2JKZHpOZEdP","subType":"00"}},
- "email":"",
- "goals":[]}
-"""
 app = Flask(__name__)
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=ServerApi('1'))
