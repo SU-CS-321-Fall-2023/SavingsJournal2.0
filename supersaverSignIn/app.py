@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
-
+""""
 @app.route('/')  # login/ signup buttons on top
 def index():
     return render_template('index.html')
@@ -65,6 +65,7 @@ def index2():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    """
 
 # SKYLER CODE
 
@@ -83,17 +84,23 @@ class Goal(BaseModel):  # each goal will have the username
     title: str
     amount: int
     deadline: str
-    notes: Optional[str]
+    notes: Optional[str] = None
     username: str
 
 
 class User(BaseModel):
     username: str
-    email: Optional[str]
+    email: Optional[str] = None
     password: str
-    goals: Optional[List]  # goals as jsons
+    goals: Optional[List]  = None # goals as jsons
 
-
+"""TEST USER
+{"_id":{"$oid":"65233833d4735672097414be"},
+ "username":"sgipson",
+ "password":{"$binary":{"base64":"JDJiJDEyJFphd1hVOEZsWGg0by41ckcyUk5zRE90VkwyOGxEcW52VXB6OTRIWnJYY0RnM2JKZHpOZEdP","subType":"00"}},
+ "email":"",
+ "goals":[]}
+"""
 app = Flask(__name__)
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -107,13 +114,13 @@ goals = db.goals
 def add_user(hashed):
     user = {'username': request.form['username'],
             'password': hashed,
-            'email': request.form['email']}
+            'email': '',
+            'goals': []}
     try:
-        User.model_validate_json(dumps(user))
-        users.insert_one(user)
+        user_obj = User(**user)
+        users.insert_one(user_obj.model_dump()) # inserts to collection as dictionary
     except ValidationError as e:
-        print(e)
-
+        return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
 
 @app.route('/', methods=['GET'])  # login/ signup buttons on top
 def index():  # adjust this to go to whatever page we want it to go to after logging in
@@ -137,10 +144,10 @@ def signUp():  # gets username, password, email and adds to user collection
             hashed = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             add_user(hashed)
             session['username'] = request.form['username']
-            flash(session['username'])
+            # flash(session['username'])
             return redirect(url_for('index2'))
         # return redirect(url_for('signIn'))  # where user exists already
-        return render_template('signIn.html')
+        return 'Username already exists.'
     return render_template('signUp.html')  # where it's a get not a post request
 
 
@@ -153,8 +160,7 @@ def signIn():
                     user['password'].encode('utf-8'):
                 session['username'] = request.form['username']
                 return redirect(url_for('index2'))  # if info matches
-            return 'Invalid username or password.'  # if info doesn't match
-        return 'Username does not exist.'
+        return 'Invalid username or password.'  # if info doesn't match
     return render_template('signIn.html')
 
 
@@ -178,19 +184,20 @@ def add_goal(goal):
     # add new goal to the user's list of goals
     # don't need to return anything or connect to a routing
     user = users.find_one({'username': session['username']})
-    goals = user.get['goals']
+    goals = user['goals']
     goals.append(goal)  # add goal dictionary to user's list
+    users.update_one({'username': session['username']}, {'$set': {'goals': goals}}) # update user entry
 
 
 def remove_goal(goal_id):
     # add new goal to the user's list of goals
     # don't need to return anything or connect to a routing
     user = users.find_one({'username': session['username']})
-    goals = user.get['goals']
-    for goal in goals:
+    goal_list = user['goals']
+    for goal in goal_list:
         if goal_id == goal.get['_id']:
-            goals.remove(goal_id)
-
+            goals.remove(goal)
+    users.update_one({'username': session['username']}, {'$set': {'goals': goals}})  # update user entry
 
 # does the context for goal/goal_id have to be goal_id or _id or just goal?
 @app.route("/create_goal/", methods=['POST', 'GET'])
@@ -207,13 +214,19 @@ def create_goal():
             "username": username  # required
         }
         try:
-            Goal.model_validate_json(dumps(goal))  # check that goal follows schema (proper fields and data types)
-            goals.insert_one(goal)  # then add to goal collection
-            add_goal(username, goal)  # pass goal into add_goal as a dictionary (with the Id)
+            goal_obj = Goal(**goal)
+            goals.insert_one(goal_obj.model_dump())
+            add_goal(username, goal.model_dump()) # pass goal into add_goal as a dictionary
             return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
         except ValidationError as e:
-            return e
-    return render_template('create_goal.html')  # if a GET request (just the blank goal form)
+            return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
+        #if Goal.model_validate_json(dumps(goal)):
+            #goals.insert_one(goal) # then add to goal collection
+            #add_goal(username, dumps(goal)) # pass goal into add_goal as a dictionary
+            #return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
+        #else:
+         #   return 'Goal information cannot be added in this format.'
+    #return render_template('create_goal.html')  # if a GET request (just the blank goal form)
 
 
 # @app.route("/user/<string:username>/goal/", methods=['GET'])
@@ -221,25 +234,20 @@ def create_goal():
 def get_goal_list():
     if 'username' in session:
         username = session['username']
-        # user_goals = db.goals.find({"username": username})  # find goals by user _id
         user = users.find_one({"username": username})  # get the user
-        user_goal_list = user.get['goals']  # get their list of goals
-        if user_goal_list:
-            # for goal in user_goal_list:
-            # user_goal_list.add(goal)
-            return user_goal_list
-        return None  # if no user goals
-
+        user_goal_list = user['goals']  # get their list of goals
+        return user_goal_list
 
 @app.route("/savings_journal/", methods=['GET'])
 def savings_journal():
-    # list all goals for the user
-    user_goal_list = get_goal_list()
-    if user_goal_list is None:
-        return redirect(url_for('index2'))
+    if 'username' in session:
+        # list all goals for the user
+        user_goal_list = get_goal_list()
+        if user_goal_list is None:
+            return render_template('savings_journal.html', goals=[])
+            # return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one when this page is finished
+        return render_template('savings_journal.html', goals=user_goal_list)
 
-    return render_template('savings_journal.html', goals=user_goal_list)
-    # return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one
 
 
 # @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
@@ -253,7 +261,6 @@ def goal(_id):
     if request.method == 'DELETE':
         remove_goal(goal['_id'])  # remove goal from user list
         goals.remove(goal)
-        flash('Goal removed!')
         return redirect(url_for('savings_journal'))  # see the remaining goals
     if request.method == 'PATCH':
         goal = goals.find_one_and_update({'_id': _id}, {'$set':
@@ -262,16 +269,15 @@ def goal(_id):
                                                              "deadline": request.form['deadline'],
                                                              "notes": request.form['notes']}
                                                         })
-        try:  # check schema after update
-            Goal.model_validate_json(dumps(goal))
+        try:
+            Goal(**goal)
             return render_template('goal/<goal_id>.html', goal=goal)  # view the goal
         except ValidationError as e:
-            return e
-
+            return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
     app.secret_key = uuid.uuid4().hex
+    app.run(debug=True)
 
 # mongo connection closes
 # client.close()
