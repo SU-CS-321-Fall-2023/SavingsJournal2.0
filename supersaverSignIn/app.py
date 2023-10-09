@@ -3,6 +3,13 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+    
+
 @app.route('/') # login/ signup buttons on top
 def index():
     return render_template('index.html')
@@ -26,7 +33,30 @@ def total_savings():
 
 @app.route('/savings_journal/')
 def savings_journal():
-    return render_template('savings_journal.html', goals=goals)
+    user_goals = [
+        {
+        'name': 'Vacation', 
+        'description': 'Trip to Hawaii',
+        'amount': 5000,
+        'deadline': '2024-06-30',
+        'status': 'todo'
+        },
+        {
+        'name': 'Car',
+        'description': 'Downpayment on new car',
+        'amount': 15000, 
+        'deadline': '2025-05-01',
+        'status': 'done'
+        },
+        {
+        'name': 'Roof',
+        'description': 'Fix roof',
+        'amount': 8000,
+        'deadline': '2023-11-15', 
+        'status': 'doing'
+        }
+    ]
+    return render_template('savings_journal.html', goals=user_goals)
 
 @app.route('/index2/')
 def index2():
@@ -200,8 +230,8 @@ def get_goal_list():
         return None  # if no user goals
 
 
-@app.route("/savings_journal/", methods=['GET'])
-def savings_journal():
+# @app.route("/savings_journal/", methods=['GET'])
+# def savings_journal():
     # list all goals for the user
 
     ## FOLLOWING UNCOMMENTED BECAUSE IT BREAKS ROUTE
@@ -209,31 +239,31 @@ def savings_journal():
     # user_goal_list = get_goal_list()
     # if user_goal_list is None:
     #     return redirect(url_for('index2'))
-    user_goals = [
-        {
-        'name': 'Vacation', 
-        'description': 'Trip to Hawaii',
-        'amount': 5000,
-        'deadline': '2024-06-30',
-        'status': 'todo'
-        },
-        {
-        'name': 'Car',
-        'description': 'Downpayment on new car',
-        'amount': 15000, 
-        'deadline': '2025-05-01',
-        'status': 'done'
-        },
-        {
-        'name': 'Roof',
-        'description': 'Fix roof',
-        'amount': 8000,
-        'deadline': '2023-11-15', 
-        'status': 'doing'
-        }
-    ]
+    # user_goals = [
+    #     {
+    #     'name': 'Vacation', 
+    #     'description': 'Trip to Hawaii',
+    #     'amount': 5000,
+    #     'deadline': '2024-06-30',
+    #     'status': 'todo'
+    #     },
+    #     {
+    #     'name': 'Car',
+    #     'description': 'Downpayment on new car',
+    #     'amount': 15000, 
+    #     'deadline': '2025-05-01',
+    #     'status': 'done'
+    #     },
+    #     {
+    #     'name': 'Roof',
+    #     'description': 'Fix roof',
+    #     'amount': 8000,
+    #     'deadline': '2023-11-15', 
+    #     'status': 'doing'
+    #     }
+    # ]
     
-    return render_template('savings_journal.html', goals=user_goals)
+    # return render_template('savings_journal.html', goals=user_goals)
     #return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one
     
 
