@@ -1,91 +1,21 @@
 from flask import Flask, render_template, jsonify
-
-app = Flask(__name__)
-
-""""
-@app.route('/')  # login/ signup buttons on top
-def index():
-    return render_template('index.html')
-
-
-@app.route('/signIn/')
-def signIn():
-    return render_template('signIn.html')
-
-
-@app.route('/signUp/')
-def signUp():
-    return render_template('signUp.html')
-
-
-@app.route('/spending_habits/')
-def spending_habits():
-    return render_template('spending_habits.html')
-
-
-@app.route('/total_savings/')
-def total_savings():
-    return render_template('total_savings.html')
-
-
-goals = [
-    {
-        'name': 'Vacation',
-        'description': 'Trip to Hawaii',
-        'amount': 5000,
-        'deadline': '2024-06-30',
-        'status': 'todo'
-    },
-    {
-        'name': 'Car',
-        'description': 'Downpayment on new car',
-        'amount': 15000,
-        'deadline': '2025-05-01',
-        'status': 'done'
-    },
-    {
-        'name': 'Roof',
-        'description': 'Fix roof',
-        'amount': 8000,
-        'deadline': '2023-11-15',
-        'status': 'doing'
-    }
-]
-
-
-@app.route('/savings_journal/')
-def savings_journal():
-    return render_template('savings_journal.html', goals=goals)
-
-
-@app.route('/index2/')
-def index2():
-    return render_template('index2.html')
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
-    """
-
-# SKYLER CODE
-
 import pymongo.server_api
 from flask import Flask, render_template, request, url_for, session, redirect, flash
 from pymongo import MongoClient
 import bcrypt
 from pydantic import BaseModel, ValidationError
 from typing import Optional, List
-from json import dumps
 import uuid
-from datetime import date
 
 
+# SKYLER CODE
 class Goal(BaseModel):  # each goal will have the username
     title: str
     amount: int
     deadline: str
     notes: Optional[str] = None
     username: str
+    # status: str
 
 
 class User(BaseModel):
@@ -98,17 +28,15 @@ class User(BaseModel):
 app = Flask(__name__)
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=pymongo.server_api.ServerApi('1'))
-## print message indicating attempt to connect to the database
+# print message indicating attempt to connect to the database
 print(f"Attempting to connect to database {uri}...")
 db = client.db
-if db: 
+if client:
     print("Successfully connected to database! {db.name}")
 users = db.users
 goals = db.goals
 
 
-# client.add_resource(User, '/user/<string:username>')
-# client.add_resource(Goal, '/user/<string:username/goal/<string:title>')
 def add_user(hashed):
     user = {'username': request.form['username'],
             'password': hashed,
@@ -199,7 +127,6 @@ def remove_goal(goal_id):
     users.update_one({'username': session['username']}, {'$set': {'goals': goals}})  # update user entry
 
 
-# does the context for goal/goal_id have to be goal_id or _id or just goal?
 @app.route("/create_goal/", methods=['POST', 'GET'])
 def create_goal():
     # create goal--adding data to mongo and going back to savings journal page (or goal page?)
@@ -217,7 +144,7 @@ def create_goal():
             goal_obj = Goal(**goal)
             goals.insert_one(goal_obj.model_dump())
             add_goal(username, goal.model_dump())  # pass goal into add_goal as a dictionary
-            return render_template('goal/<goal_id>.html', goal_id=goal['_id'])
+            return render_template('goal/<string:goal_id>.html', goal_id=goal['_id'])
         except ValidationError as e:
             return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
         # if Goal.model_validate_json(dumps(goal)):
@@ -229,8 +156,6 @@ def create_goal():
     # return render_template('create_goal.html')  # if a GET request (just the blank goal form)
 
 
-# @app.route("/user/<string:username>/goal/", methods=['GET'])
-# can't edit anything on this page so no Posting, Deleting, or Patching
 def get_goal_list():
     if 'username' in session:
         username = session['username']
@@ -251,14 +176,13 @@ def savings_journal():
         # return user_goal_list
 
 
-# @app.route("/user/<string:username>/goal/<PydanticObjectId:_id>", methods=['GET'])
-# access a single goal only through the savings journal page where all the goals are
-# so put savings journal in the route?
-@app.route("/goal/<goal_id>/", methods=['GET', 'DELETE', 'PATCH'])
-def goal(_id):
+@app.route("/goal/string:<goal_id>/", methods=['GET', 'DELETE', 'PATCH'])
+def goal(goal_id):
+    from bson import ObjectId
+    _id = ObjectId(goal_id)
     goal = goals.find_one_or_404({'_id': _id})
     if request.method == 'GET':
-        return render_template('/goal/<goal_id>.html', goal=goal)  # view the goal
+        return render_template('/goal/<string:goal_id>.html', goal=goal)  # view the goal
     if request.method == 'DELETE':
         remove_goal(goal['_id'])  # remove goal from user list
         goals.remove(goal)
@@ -272,14 +196,17 @@ def goal(_id):
                                                         })
         try:
             Goal(**goal)
-            return render_template('goal/<goal_id>.html', goal=goal)  # view the goal
+            return render_template('goal/<string:goal_id>.html', goal=goal)  # view the goal
         except ValidationError as e:
             return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
+
+# need to test
+@app.route("/goal/string:<status>/", methods=['GET'])
+def check_status(status):  # status will be string 'done', 'doing', or 'to do'
+    goal_list = goals.find({"status": status})
+    return render_template('.html', goal_list=goal_list)
 
 
 if __name__ == '__main__':
     app.secret_key = uuid.uuid4().hex
     app.run(debug=True)
-
-# mongo connection closes
-# client.close()
