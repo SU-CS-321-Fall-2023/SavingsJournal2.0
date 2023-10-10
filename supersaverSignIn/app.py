@@ -94,6 +94,8 @@ def get_goal_list():
         user = users.find_one({"username": username})  # get the user
         user_goal_list = user['goals']  # get their list of goals
         return user_goal_list
+    
+import locale
 
 @app.route('/total_savings/', methods = ['GET'])
 def total_savings():
@@ -102,7 +104,10 @@ def total_savings():
     if goal_list:
         for goal in goal_list:
             totalneeded += goal['amount'] # as money is saved, compile it
-        return render_template('total_savings.html', totalneeded=totalneeded)
+
+        locale.setlocale( locale.LC_ALL, '' )
+        formatted_total = locale.currency(totalneeded, grouping=True)
+        return render_template('total_savings.html', totalneeded=formatted_total)
     return render_template('total_savings.html', totalneeded=0)
 
 
