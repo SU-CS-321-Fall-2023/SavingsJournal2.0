@@ -1,18 +1,51 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {%block head %}
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SuperSaver</title>
     <!-- Link to the stylesheet -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/css/output.css')}}"
+    />
+  </head>
+  {% endblock %}
 
-{% block content %}
-<!-- This is where the content of the extended templates will be placed -->
-{% endblock %}
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="icon-text-group">
+        <a href="{{ url_for('index2') }}">
+        <img
+          src="{{ url_for('static', filename='img/journal.png') }}"
+          alt="Icon"
+          class="navbar-icon"
+        /></a>
+        <span>SuperSaver</span>
+      </div>
+      <div class="button-group">
+        <a href="{{ url_for('index') }}">Logout</a>
+        <a href="{{ url_for('total_savings') }}">Total Savings</a>
 
-</body>
+        <div class="savingsBtn">
+          <a href="{{ url_for('savings_journal') }}" class="red-btnSavings"
+            >Savings Journal</a
+          >
+        </div>
+      </div>
+    </div>
+    {% block content %}
+    <!-- This is where the content of the extended templates will be placed -->
+    {% endblock %}
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+  </body>
 </html>
-

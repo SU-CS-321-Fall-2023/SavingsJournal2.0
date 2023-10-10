@@ -1,29 +1,31 @@
 <!-- templates/index.html -->
-{% extends "base.html" %}
+{% extends "base2.html" %}
 
 {% block content %}
 <!-- Navbar -->
 <div class="navbar">
     <div class="icon-text-group">
-        <img src="{{ url_for('static', filename='img/journal.png') }}" alt="Icon" class="navbar-icon">
+        <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/journal.png') }}" 
+            alt="Icon" class="navbar-icon"></a>
         <span>SuperSaver</span>
     </div>
     <div class="button-group">
         <a href="{{ url_for('signIn') }}">Login</a>
-        <a href="{{ url_for('signUp') }}" class="red-btn">Sign Up</a>
+        
 
-
+        <div class = "savingsBtn">
+        <a href="{{ url_for('signUp') }}" class="red-btnSavings">Sign Up</a>
+    </div>
     </div>
 </div>
-
 <!-- Main Content -->
 <div class="content">
     <img src="{{ url_for('static', filename='img/moneytree2.jpg') }}" alt="Big Image" class="big-image">
     <div>
-        <h1>Changing <br>savings one <br>day at a time</h1>
+        <h1 class = "ChangingSavings">Changing <br>savings one <br>day at a time</h1>
         <p>Join now and get 50% off <br> and the deal of a lifetime <br>right before your eyes</p>
         <div class = "startBtn">
-        <button class="red-btn">Start Now</button>
+        <a href="{{ url_for('signUp') }}" class="red-btn">Start Now</a>
     </div>
 
     </div>
@@ -34,5 +36,24 @@
 
 <!-- Additional sections as described -->
 <!-- ... -->
+<div class="content">
+    <img src="{{ url_for('static', filename='img/coins.jpg') }}" alt="Big Image" class="coins-image">
+    <div>
+        <p class = "coins-text">Savings such a hassle.<br> Allow us to take it from<br> here!</p>
+
+    </div>
+</div>
+<div class="content">
+    <img src="{{ url_for('static', filename='img/savingsjar.jpg') }}" alt="Big Image" class="jar-image">
+    <div>
+        <p class = "jar-text">With SuperSaver, you’ll<br> be able to manage and<br> keep track of the things<br> you want in no time.</p>
+    </div>
+</div>
+<div class="content">
+    <img src="{{ url_for('static', filename='img/savingswallet.jpg') }}" alt="Big Image" class="wallet-image">
+    <div>
+        <p class = "wallet-text">Don’t lose focus on the<br> things you want with<br>SuperSaver.</p>
+    </div>
+</div>
 
 {% endblock %}

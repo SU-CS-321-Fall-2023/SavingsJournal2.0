@@ -1,0 +1,47 @@
+{% extends "base2.html" %}
+
+{% block content %}
+<!-- Navbar -->
+<div class="navbar">
+    <div class="icon-text-group">
+        <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/journal.png') }}" 
+            alt="Icon" class="navbar-icon"></a>
+        <span>SuperSaver</span>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    <!--img src="{{ url_for('static', filename='img/moneytree2.jpg') }}" alt="Big Image" class="big-image"-->
+    <div>
+        <h1 class = "Sign-in-txt">Sign in</h1>
+        <!--<p>Join now and get 50% off <br> and the deal of a lifetime <br>right before your eyes</p-->
+        <form action="/signIn/" method='POST'>
+            <div class = "signInBg">
+                <p class = "usernameSignIn">username: </p>
+            <!--USERNAME TEXT BOX--> <input type="text" name="username" id="textbox1">
+
+            <div class = "password">
+                <p class = "passwordSignIn">password: </p>
+                <!--USERNAME TEXT BOX--><input type="password" name="password" id="textbox2">
+            </div>
+
+            <div class = "enterBtn">
+                <!--ENTER BUTTON<a href="{{ url_for('index2') }}" class="enter-btn">Enter</a>-->
+                <input type="submit" value="Sign In" class="enter-btn">
+            </div>
+
+            <p class ="signUptxt">Don't have an<br>account? </p>
+            <a href="{{ url_for('signUp') }}" class = "Sign-upBtn">Sign Up</a>
+        </div>
+        </form>
+    <div/>
+</div>
+
+<!-- Line Separator -->
+
+
+<!-- Additional sections as described -->
+<!-- ... -->
+
+{% endblock %}

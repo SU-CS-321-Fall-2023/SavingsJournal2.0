@@ -161,17 +161,27 @@ p {
     position: relative;  /* This allows manual positioning */
     right: 700px;  /* This moves the image 30px to the left */
 }
+
 .TotalSavingsNeeded{
     font-size: 4em;  /* Adjust this value for the desired font size */
     position: relative;  /* This allows manual positioning */
     right: 0px;  /* This moves the image 30px to the left */
-    top: -70px;
+    top: -40px;
     color: #ff8c8c;
 }
 .totalSavingsBg{
     background-color: #ff8c8c;
     box-shadow: 20px /*5px*/ 20px rgba(0, 0, 0, 0.2);
-    padding: 20px 250px;  /* Adjust this to your desired size */
+    position:relative;
+    padding: 40px 250px;  /* Adjust this to your desired size */
+    right: -150px;
+    border-radius: 10px;
+}
+
+.displayBox{
+   background-color: #FFD1D1;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 60px 140px;  /* Adjust this to your desired size */
     border: none;
     text-decoration: none;
     color: inherit;
@@ -184,19 +194,20 @@ p {
     top: -50px;
 }
 .totalNumbers{
-color:white;
-position: relative;  /* This allows manual positioning */
-    right: 15px;
+    color:white;
+    position: relative;  /* This allows manual positioning */
+    right: 130px;
     font-style: italic;
     font-weight: 100;
+    font-size: 3em;
 }
 .motivationalSpeech{
     color:white;
-position: relative;  /* This allows manual positioning */
+position: relative;  /* This allows manual positioning*/
     right: -10px;
     font-style: italic;
     font-weight: 100;
-    top: -20px;
+    top: 10px;
 }
 .progressBg{
     background-color: #ff8c8c;
@@ -209,7 +220,7 @@ position: relative;  /* This allows manual positioning */
      /* This will help the anchor tag respect padding and other block-level properties */
     border-radius: 25px;
     position: relative;  /* This allows manual positioning */
-    top: -80px;
+    top: -30px;
     left: 150px;
     
 }
@@ -219,8 +230,7 @@ position: relative;  /* This allows manual positioning */
     padding: 40px;
     justify-content: space-between;
     position: relative;
-    top: -30px;
+    top: px;
     
 }
-
 
