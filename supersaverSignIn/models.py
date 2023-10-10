@@ -8,7 +8,7 @@ class Goal(BaseModel):  # each goal will have the username
     deadline: str
     notes: Optional[str] = None
     username: str
-    # status: str
+    status: str
 
 
 class User(BaseModel):
