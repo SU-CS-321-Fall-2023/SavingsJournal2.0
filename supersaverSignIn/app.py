@@ -7,35 +7,11 @@ from pydantic import BaseModel, ValidationError
 from typing import Optional, List
 import uuid
 
-# SKYLER CODE
-class Goal(BaseModel):  # each goal will have the username
-    title: str
-    amount: int
-    deadline: str
-    notes: Optional[str] = None
-    username: str
-    # status: str
-
-
-class User(BaseModel):
-    username: str
-    email: Optional[str] = None
-    password: str
-    goals: Optional[List] = None  # goals as jsons
-
+from models import Goal, User
+from mongo_service import db, users, goals
 
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
-uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
-client = MongoClient(uri, server_api=pymongo.server_api.ServerApi('1'))
-# print message indicating attempt to connect to the database
-print(f"Attempting to connect to database {uri}...")
-db = client.db
-if client:
-    print("Successfully connected to database! {db.name}")
-users = db.users
-goals = db.goals
-
 
 def add_user(hashed):
     user = {'username': request.form['username'],
