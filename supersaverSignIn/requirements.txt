@@ -4,3 +4,4 @@ bcrypt
 pydantic
 typing
 uuid
+gunicorn
