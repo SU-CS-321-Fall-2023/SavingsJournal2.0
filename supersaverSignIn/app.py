@@ -8,6 +8,7 @@ from typing import Optional, List
 import uuid
 
 
+
 # SKYLER CODE
 class Goal(BaseModel):  # each goal will have the username
     title: str
@@ -26,6 +27,7 @@ class User(BaseModel):
 
 
 app = Flask(__name__)
+app.secret_key = uuid.uuid4().hex
 uri = "mongodb+srv://Cluster61649:UWFPfm9BXGFp@cluster61649.dcrddgj.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=pymongo.server_api.ServerApi('1'))
 # print message indicating attempt to connect to the database
@@ -208,5 +210,4 @@ def check_status(status):  # status will be string 'done', 'doing', or 'to do'
 
 
 if __name__ == '__main__':
-    app.secret_key = uuid.uuid4().hex
     app.run(debug=True)
