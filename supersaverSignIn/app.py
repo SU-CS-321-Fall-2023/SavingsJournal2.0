@@ -1,14 +1,10 @@
-from flask import Flask, render_template, jsonify
-import pymongo.server_api
-from flask import Flask, render_template, request, url_for, session, redirect, flash
-from pymongo import MongoClient
+from flask import jsonify
+from flask import Flask, render_template, request, url_for, session, redirect
 import bcrypt
-from pydantic import BaseModel, ValidationError
-from typing import Optional, List
+from pydantic import ValidationError
 import uuid
-
 from models import Goal, User
-from mongo_service import db, users, goals
+from mongo_service import users, goals
 
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
