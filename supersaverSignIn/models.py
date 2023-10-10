@@ -1,5 +1,6 @@
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 from typing import Optional, List
+
 
 class Goal(BaseModel):  # each goal will have the username
     title: str
