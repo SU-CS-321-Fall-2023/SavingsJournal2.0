@@ -69,6 +69,7 @@ def create_goal():
             "amount": request.form['amount'],  # required
             "deadline": request.form['deadline'],  # required
             "notes": request.form['notes'],
+            "status": request.form['status'],  # required
             "username": username  # required
         }
         print(goal)
@@ -94,6 +95,7 @@ def get_goal_list():
         user = users.find_one({"username": username})  # get the user
         user_goal_list = user['goals']  # get their list of goals
         return user_goal_list
+    return render_template('index.html')
     
 import locale
 
@@ -121,6 +123,7 @@ def savings_journal():
     return render_template('savings_journal.html', goals=user_goal_list)
         # return user_goal_list
 
+# need to test (no individual goal page exists yet)
 @app.route("/goal/string:<goal_id>/", methods=['GET', 'DELETE', 'PATCH'])
 def goal(goal_id):
     from bson import ObjectId
