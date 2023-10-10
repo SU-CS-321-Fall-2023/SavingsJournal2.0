@@ -14,7 +14,7 @@ def add_user(hashed):
     except ValidationError as e:
         return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
 
-def add_goal(username, goal):
+def add_goal(goal):
     # add new goal to the user's list of goals
     # don't need to return anything or connect to a routing
     user = users.find_one({'username': session['username']})
