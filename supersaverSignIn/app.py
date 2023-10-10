@@ -74,6 +74,7 @@ def create_goal():
             "notes": request.form['notes'],
             "username": username  # required
         }
+        print(goal)
         try:
             goal_obj = Goal(**goal)
             goals.insert_one(goal_obj.model_dump())

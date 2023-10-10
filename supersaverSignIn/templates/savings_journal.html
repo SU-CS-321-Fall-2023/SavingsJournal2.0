@@ -66,12 +66,13 @@ class="p-0 w-16 h-16 bg-red-400 rounded-full hover:bg-red-600 active:shadow-lg m
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add new goal</h3>
-                <form class="space-y-6" action="#">
+
+                <form class="space-y-6" action="/create_goal/" method='POST'>
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Goal Name</label>
                         <input
                         type="text"
-                        name="goal_name"
+                        name="title"
                         id="goal_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                         placeholder="Vacation"
@@ -81,7 +82,7 @@ class="p-0 w-16 h-16 bg-red-400 rounded-full hover:bg-red-600 active:shadow-lg m
                         <label for="goal_description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Goal Description</label>
                         <input
                         type="text"
-                        name="goal_description"
+                        name="notes"
                         id="goal_description"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                         placeholder="Trip to Hawaii"
@@ -93,7 +94,19 @@ class="p-0 w-16 h-16 bg-red-400 rounded-full hover:bg-red-600 active:shadow-lg m
                         </label>
                         <input
                         type="number"
-                        name="goal_amount"
+                        name="amount"
+                        id="goal_amount"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                        placeholder="3000"
+                        required>
+                    </div>
+                    <div>
+                        <label for="goal_amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Deadline
+                        </label>
+                        <input
+                        type="text"
+                        name="deadline"
                         id="goal_amount"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                         placeholder="3000"
