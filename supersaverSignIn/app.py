@@ -78,7 +78,7 @@ def create_goal():
         try:
             goal_obj = Goal(**goal)
             goals.insert_one(goal_obj.model_dump())
-            add_goal(username, goal.model_dump())  # pass goal into add_goal as a dictionary
+            add_goal(username, goal_obj.model_dump())  # pass goal into add_goal as a dictionary
             return render_template('goal/<string:goal_id>.html', goal_id=goal['_id'])
         except ValidationError as e:
             return jsonify({'message': 'Validation error', 'errors': e.errors()}), 400
