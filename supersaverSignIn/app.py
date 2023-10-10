@@ -57,9 +57,6 @@ def logout():
 def spending_habits():
     return render_template('spending_habits.html')
 
-@app.route('/total_savings/')
-def total_savings():
-    return render_template('total_savings.html')
 
 @app.route("/create_goal/", methods=['POST', 'GET'])
 def create_goal():
@@ -97,16 +94,31 @@ def get_goal_list():
         user = users.find_one({"username": username})  # get the user
         user_goal_list = user['goals']  # get their list of goals
         return user_goal_list
+    
+import locale
+
+@app.route('/total_savings/', methods = ['GET'])
+def total_savings():
+    totalneeded = 0  # so previous counts don't affect the recalculations
+    goal_list = get_goal_list()  # from app.py
+    if goal_list:
+        for goal in goal_list:
+            totalneeded += goal['amount'] # as money is saved, compile it
+
+        locale.setlocale( locale.LC_ALL, '' )
+        formatted_total = locale.currency(totalneeded, grouping=True)
+        return render_template('total_savings.html', totalneeded=formatted_total)
+    return render_template('total_savings.html', totalneeded=0)
+
 
 @app.route("/savings_journal/", methods=['GET'])
 def savings_journal():
-    if 'username' in session:
-        # list all goals for the user
-        user_goal_list = get_goal_list()
-        if user_goal_list is None:
-            return render_template('savings_journal.html', goals=[])
+    # list all goals for the user
+    user_goal_list = get_goal_list()
+    if user_goal_list is None:
+        return render_template('savings_journal.html', goals=[])
             # return redirect(url_for('create_goal'))  # if no goals exist yet, give option to create one when this page is finished
-        return render_template('savings_journal.html', goals=user_goal_list)
+    return render_template('savings_journal.html', goals=user_goal_list)
         # return user_goal_list
 
 @app.route("/goal/string:<goal_id>/", methods=['GET', 'DELETE', 'PATCH'])
